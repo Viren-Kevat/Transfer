@@ -3,37 +3,36 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import icon from "../../assets/icon.png";
 
-
 const Login = () => {
-    const [data, setData] = useState({ email: "", password: "" });
-    const [error, setError] = useState("");
+  const [data, setData] = useState({ email: "", password: "" });
+  const [error, setError] = useState("");
 
-    const handleChange = ({ currentTarget: input }) => {
-        setData({ ...data, [input.name]: input.value });
-    };
+  const handleChange = ({ currentTarget: input }) => {
+    setData({ ...data, [input.name]: input.value });
+  };
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        try {
-            const url = "http://localhost:8080/api/auth";
-            const { data: res } = await axios.post(url, data);
-            localStorage.setItem("token", res.data);
-            window.location = "/";
-        } catch (error) {
-            if (
-                error.response &&
-                error.response.status >= 400 &&
-                error.response.status <= 500
-            ) {
-                setError(error.response.data.message);
-            }
-        }
-    };
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const url = "http://localhost:8081/api/auth";
+      const { data: res } = await axios.post(url, data);
+      localStorage.setItem("token", res.data);
+      window.location = "/";
+    } catch (error) {
+      if (
+        error.response &&
+        error.response.status >= 400 &&
+        error.response.status <= 500
+      ) {
+        setError(error.response.data.message);
+      }
+    }
+  };
 
-    return (
-        <>
-            <style>
-                {`
+  return (
+    <>
+      <style>
+        {`
                 .login_container {
                     width: 100%;
                     min-height: 100vh;
@@ -272,53 +271,63 @@ const Login = () => {
 }
 
                 `}
-            </style>
-            <div className="login_container">
-            <img src={icon} alt="icon" className="icon_image" />
-                <div className="login_form_container">
-                    <div className="left">
-                        <h1> 👟Welcome !</h1>
-                        <p style={{ marginLeft: "-225px" }}>We missed you a lot ! Step into comfort and style!  </p>
-                        <span style={{ marginLeft: "-200px" }}>Discover footwear that fits your active lifestyle perfectly.</span>
-                        <span style={{ marginLeft: "-280px" }}>Start your journey with us today.</span>
-                    </div>
-                    <div className="right">
-                        
-                        <form  style = {{width: "max-content"}}className="form_container" onSubmit={handleSubmit}>
-                            <h1>Sign in</h1>
-                            <input
-                                type="email"
-                                placeholder="Email"
-                                name="email"
-                                onChange={handleChange}
-                                value={data.email}
-                                required
-                                className="input"
-                            />
-                            <input
-                                type="password"
-                                placeholder="Password"
-                                name="password"
-                                onChange={handleChange}
-                                value={data.password}
-                                required
-                                className="input"
-                            />
-                            {error && <div className="error_msg">{error}</div>}
-                            <button type="submit" className="black_btn">
-                                Sign In
-                            </button>
-							<p className="not-have-account">
-                                Do not have an account? <Link to="/signup" className="sign_up_button">Sign up.</Link>
-                            </p>
-
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </>
-    );
+      </style>
+      <div className="login_container">
+        <img src={icon} alt="icon" className="icon_image" />
+        <div className="login_form_container">
+          <div className="left">
+            <h1> 👟Welcome !</h1>
+            <p style={{ marginLeft: "-225px" }}>
+              We missed you a lot ! Step into comfort and style!{" "}
+            </p>
+            <span style={{ marginLeft: "-200px" }}>
+              Discover footwear that fits your active lifestyle perfectly.
+            </span>
+            <span style={{ marginLeft: "-280px" }}>
+              Start your journey with us today.
+            </span>
+          </div>
+          <div className="right">
+            <form
+              style={{ width: "max-content" }}
+              className="form_container"
+              onSubmit={handleSubmit}
+            >
+              <h1>Sign in</h1>
+              <input
+                type="email"
+                placeholder="Email"
+                name="email"
+                onChange={handleChange}
+                value={data.email}
+                required
+                className="input"
+              />
+              <input
+                type="password"
+                placeholder="Password"
+                name="password"
+                onChange={handleChange}
+                value={data.password}
+                required
+                className="input"
+              />
+              {error && <div className="error_msg">{error}</div>}
+              <button type="submit" className="black_btn">
+                Sign In
+              </button>
+              <p className="not-have-account">
+                Do not have an account?{" "}
+                <Link to="/signup" className="sign_up_button">
+                  Sign up.
+                </Link>
+              </p>
+            </form>
+          </div>
+        </div>
+      </div>
+    </>
+  );
 };
 
 export default Login;
-

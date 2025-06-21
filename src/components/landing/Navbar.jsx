@@ -13,11 +13,11 @@ const Navbar = () => {
   const dispatch = useDispatch();
   const cartItems = useSelector((state) => state.cart.cartItems);
   const [fixedNav, setFixedNav] = useState(false);
-  const [showSearchBar, setShowSearchBar] = useState(false); 
-  const [searchQuery, setSearchQuery] = useState(""); 
-  const [filteredItems, setFilteredItems] = useState([]); 
-  const [iconColor, setIconColor] = useState("white"); 
-  const [logoutColor, setLogoutColor] = useState("white"); 
+  const [showSearchBar, setShowSearchBar] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [filteredItems, setFilteredItems] = useState([]);
+  const [iconColor, setIconColor] = useState("white");
+  const [logoutColor, setLogoutColor] = useState("white");
 
   useEffect(() => {
     window.addEventListener("scroll", () => {
@@ -91,31 +91,54 @@ const Navbar = () => {
                     />
                     {/* Additional search bar components */}
                     <button onClick={clearSearch}>
-                    <FontAwesomeIcon icon={faTimes} size="lg" />
+                      <FontAwesomeIcon icon={faTimes} size="lg" />
                     </button>
                   </div>
                 ) : (
                   <button onClick={toggleSearchBar}>
-                      <i className="fa-solid fa-magnifying-glass" style={{ color: iconColor }}></i>
+                    <i
+                      className="fa-solid fa-magnifying-glass"
+                      style={{ color: iconColor }}
+                    ></i>
                   </button>
                 )}
               </li>
-            
-             
+
               <li>
                 <button
                   onClick={() => dispatch(cartActions.showCart())}
                   className="cart-icon position-relative"
                 >
-                  <i className="fa-solid fa-cart-shopping" style={{ color: iconColor }}></i>{" "}
+                  <i
+                    className="fa-solid fa-cart-shopping"
+                    style={{ color: iconColor }}
+                  ></i>{" "}
                   <span className="cart-num fw-bold d-flex justify-content-center align-items-center position-absolute rounded-circle">
                     {cartItems.length}
                   </span>
                 </button>
               </li>
               <li>
-              
-              <button onClick={handleLogout} style={{ color: logoutColor }}> Logout</button>
+                <button onClick={handleLogout} style={{ color: logoutColor }}>
+                  {" "}
+                  Logout
+                </button>
+              </li>
+              <li>
+                <button
+                  onClick={() => (window.location.href = "/subscription")}
+                  className="btn btn-primary"
+                  style={{
+                    background: "#1da1f2",
+                    color: "white",
+                    border: "none",
+                    borderRadius: "20px",
+                    padding: "8px 18px",
+                    fontWeight: 600,
+                  }}
+                >
+                  Subscription
+                </button>
               </li>
             </ul>
           </div>
@@ -123,15 +146,14 @@ const Navbar = () => {
       </div>
       {/* Render filtered items */}
       {showSearchBar && (
-  <div className="container mt-4"> 
-    <div className="row">
-      {filteredItems.map((item) => (
-        <FilteredProductCard key={item.id} filteredItem={item} />
-      ))}
-    </div>
-  </div>
-)}
-
+        <div className="container mt-4">
+          <div className="row">
+            {filteredItems.map((item) => (
+              <FilteredProductCard key={item.id} filteredItem={item} />
+            ))}
+          </div>
+        </div>
+      )}
     </div>
   );
 };
